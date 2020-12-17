@@ -1,5 +1,5 @@
 // Import of Global Styles
-import GlobalStyle from "./components/GlobalStyle";
+import GlobalStyle from "./shared/GlobalStyle";
 
 function App() {
   return (
