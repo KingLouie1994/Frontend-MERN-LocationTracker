@@ -1,18 +1,18 @@
 // Import Components
-import UserItem from "./UserItem";
+import User from "./User";
 
 // Imports for Styling
 import styled from "styled-components";
 
-const UsersList = (props) => {
+const UsersList = ({ users }) => {
   return (
     <UsersListContainer>
-      {props.items.length === 0 ? (
+      {users.length === 0 ? (
         <h2>No users found</h2>
       ) : (
-        <ul className="users-list">
-          {props.items.map((user) => (
-            <UserItem
+        <StyledUsersList>
+          {users.map((user) => (
+            <User
               key={user.id}
               id={user.id}
               image={user.image}
@@ -20,7 +20,7 @@ const UsersList = (props) => {
               placeCount={user.places}
             />
           ))}
-        </ul>
+        </StyledUsersList>
       )}
     </UsersListContainer>
   );
@@ -32,6 +32,17 @@ const UsersListContainer = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+`;
+
+const StyledUsersList = styled.ul`
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  width: 90%;
+  max-width: 50rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 `;
 
 export default UsersList;
