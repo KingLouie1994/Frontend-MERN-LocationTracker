@@ -1,8 +1,13 @@
+// Imports from React
+import ReactDOM from "react-dom";
+
 // Imports for Styling
 import styled from "styled-components";
 
 const SideDrawer = (props) => {
-  return <StyledSideDrawer>{props.children}</StyledSideDrawer>;
+  const content = <StyledSideDrawer>{props.children}</StyledSideDrawer>;
+
+  return ReactDOM.createPortal(content, document.getElementById("drawer-hook"));
 };
 
 // Styled Components
