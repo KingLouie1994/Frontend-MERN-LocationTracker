@@ -1,5 +1,5 @@
 // Imports from React
-import React from "react";
+import React, { useState } from "react";
 
 // Imports from React Router Dom
 import { Link } from "react-router-dom";
@@ -8,20 +8,36 @@ import { Link } from "react-router-dom";
 import MainHeader from "./MainHeader";
 import NavLinks from "./NavLinks";
 import SideDrawer from "./SideDrawer";
+import Backdrop from "../Backdrop";
 
 // Imports for Styling
 import styled from "styled-components";
 
 const MainNavigation = (props) => {
+  // Initialise State
+  const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+
+  // Handlers
+  const openDrawer = () => {
+    setDrawerIsOpen(true);
+  };
+
+  const closeDrawer = () => {
+    setDrawerIsOpen(false);
+  };
+
   return (
     <React.Fragment>
-      <SideDrawer>
-        <DrawerNav>
-          <NavLinks />
-        </DrawerNav>
-      </SideDrawer>
+      {drawerIsOpen && <Backdrop onClick={closeDrawer} />}
+      {drawerIsOpen && (
+        <SideDrawer>
+          <DrawerNav>
+            <NavLinks />
+          </DrawerNav>
+        </SideDrawer>
+      )}
       <MainHeader>
-        <NavigationMenuButton>
+        <NavigationMenuButton onClick={openDrawer}>
           <span />
           <span />
           <span />
