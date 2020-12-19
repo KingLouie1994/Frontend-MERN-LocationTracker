@@ -1,5 +1,6 @@
-// Import Components
+// Imports of Components
 import User from "./User";
+import Card from "../../shared/components/Card";
 
 // Imports for Styling
 import styled from "styled-components";
@@ -8,7 +9,9 @@ const UsersList = ({ users }) => {
   return (
     <UsersListContainer>
       {users.length === 0 ? (
-        <h2>No users found</h2>
+        <Card>
+          <h2>No users found</h2>
+        </Card>
       ) : (
         <StyledUsersList>
           {users.map((user) => (

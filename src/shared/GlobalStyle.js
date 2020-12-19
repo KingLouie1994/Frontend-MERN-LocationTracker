@@ -18,6 +18,10 @@ body {
   background: #4d4d4d;
 }
 
+main {
+  margin-top: 5rem;
+}
+
 .slide-in-left-enter {
   transform: translateX(-100%);
 }
