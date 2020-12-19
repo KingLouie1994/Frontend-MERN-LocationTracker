@@ -29,7 +29,7 @@ main {
 .slide-in-left-enter-active {
   transform: translateX(0);
   opacity: 1;
-  transition: all 200ms;
+  transition: all 750ms;
 }
 
 .slide-in-left-exit {
@@ -40,7 +40,7 @@ main {
 .slide-in-left-exit-active {
   transform: translateX(-100%);
   opacity: 0;
-  transition: all 200ms;
+  transition: all 750ms;
 }
 
 .center {

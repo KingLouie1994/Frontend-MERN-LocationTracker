@@ -18,26 +18,24 @@ const MainNavigation = (props) => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
 
   // Handlers
-  const openDrawer = () => {
+  const openDrawerHandler = () => {
     setDrawerIsOpen(true);
   };
 
-  const closeDrawer = () => {
+  const closeDrawerHandler = () => {
     setDrawerIsOpen(false);
   };
 
   return (
     <React.Fragment>
-      {drawerIsOpen && <Backdrop onClick={closeDrawer} />}
-      {drawerIsOpen && (
-        <SideDrawer>
-          <DrawerNav>
-            <NavLinks />
-          </DrawerNav>
-        </SideDrawer>
-      )}
+      {drawerIsOpen && <Backdrop onClick={closeDrawerHandler} />}
+      <SideDrawer show={drawerIsOpen} onClick={closeDrawerHandler}>
+        <DrawerNav>
+          <NavLinks />
+        </DrawerNav>
+      </SideDrawer>
       <MainHeader>
-        <NavigationMenuButton onClick={openDrawer}>
+        <NavigationMenuButton onClick={openDrawerHandler}>
           <span />
           <span />
           <span />
