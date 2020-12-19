@@ -1,26 +1,39 @@
+// Imports from React
+import React from "react";
+
 // Imports from React Router Dom
 import { Link } from "react-router-dom";
 
 // Imports of Components
 import MainHeader from "./MainHeader";
 import NavLinks from "./NavLinks";
+import SideDrawer from "./SideDrawer";
 
 // Imports for Styling
 import styled from "styled-components";
 
 const MainNavigation = (props) => {
   return (
-    <MainHeader>
-      <NavigationMenuButton>
-        <span />
-        <span />
-        <span />
-      </NavigationMenuButton>
-      <NavigationTitle>
-        <Link to="/">YourPlaces</Link>
-      </NavigationTitle>
-      <NavLinks></NavLinks>
-    </MainHeader>
+    <React.Fragment>
+      <SideDrawer>
+        <DrawerNav>
+          <NavLinks />
+        </DrawerNav>
+      </SideDrawer>
+      <MainHeader>
+        <NavigationMenuButton>
+          <span />
+          <span />
+          <span />
+        </NavigationMenuButton>
+        <NavigationTitle>
+          <Link to="/">YourPlaces</Link>
+        </NavigationTitle>
+        <HeaderNav>
+          <NavLinks />
+        </HeaderNav>
+      </MainHeader>
+    </React.Fragment>
   );
 };
 
@@ -53,17 +66,15 @@ const NavigationTitle = styled.h1`
   }
 `;
 
-// .main-navigation__header-nav {
-//   display: none;
-// }
+const HeaderNav = styled.nav`
+  display: none;
+  @media (min-width: 768px) {
+    display: block;
+  }
+`;
 
-// .main-navigation__drawer-nav {
-//   height: 100%;
-// }
-
-//   .main-navigation__header-nav {
-//     display: block;
-//   }
-// }
+const DrawerNav = styled.nav`
+  height: 100%;
+`;
 
 export default MainNavigation;
