@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 // Imports of Components
 import MainHeader from "./MainHeader";
+import NavLinks from "./NavLinks";
 
 // Imports for Styling
 import styled from "styled-components";
@@ -16,9 +17,9 @@ const MainNavigation = (props) => {
         <span />
       </NavigationMenuButton>
       <NavigationTitle>
-        <Link to="/">Your Places</Link>
+        <Link to="/">YourPlaces</Link>
       </NavigationTitle>
-      <nav>...</nav>
+      <NavLinks></NavLinks>
     </MainHeader>
   );
 };
@@ -46,7 +47,6 @@ const NavigationMenuButton = styled.button`
 `;
 
 const NavigationTitle = styled.h1`
-  color: white;
   a {
     text-decoration: none;
     color: white;
