@@ -7,7 +7,7 @@ import styled from "styled-components";
 const PlaceItem = (props) => {
   return (
     <StyledPlaceItem>
-      <Card className="place-time__content">
+      <Card style={{ padding: 0 }}>
         <PlaceItemImage>
           <img src={props.image} alt={props.title} />
         </PlaceItemImage>
@@ -29,9 +29,6 @@ const PlaceItem = (props) => {
 // Styled Components
 const StyledPlaceItem = styled.li`
   margin: 1rem 0;
-  .place-item__content {
-    padding: 0;
-  }
 `;
 
 const PlaceItemImage = styled.div`
@@ -64,6 +61,7 @@ const PlaceItemActions = styled.div`
   border-top: 1px solid #ccc;
   button,
   a {
+      padding: 0rem 0.2rem;
     margin: 0.5rem;
   }
 `;

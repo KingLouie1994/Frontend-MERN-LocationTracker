@@ -7,7 +7,7 @@ const DUMMY_PLACES = [
     title: "Empire State Building",
     description: "One of the most famous sky scrapers in the world!",
     imageUrl:
-      "https://de.wikipedia.org/wiki/Empire_State_Building#/media/Datei:Empire_State_Building_from_the_Top_of_the_Rock.jpg",
+      "https://pbs.twimg.com/profile_images/1272532349151072262/kBEZiWIQ.jpg",
     address: "20 W 34th St, New York, NY 10001",
     location: {
       lat: 40.7484445,
@@ -20,7 +20,7 @@ const DUMMY_PLACES = [
     title: "Empire State Building",
     description: "One of the most famous sky scrapers in the world!",
     imageUrl:
-      "https://de.wikipedia.org/wiki/Empire_State_Building#/media/Datei:Empire_State_Building_from_the_Top_of_the_Rock.jpg",
+      "https://pbs.twimg.com/profile_images/1272532349151072262/kBEZiWIQ.jpg",
     address: "20 W 34th St, New York, NY 10001",
     location: {
       lat: 40.7484445,
