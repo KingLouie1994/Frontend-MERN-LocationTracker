@@ -1,4 +1,4 @@
-// Import Components
+// Imports of Components
 import UsersList from "../components/UsersList";
 
 const Users = () => {

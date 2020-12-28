@@ -1,7 +1,7 @@
 // Imports from React Router Dom
 import { Link } from "react-router-dom";
 
-// Import Components
+// Imports of Components
 import Avatar from "../../shared/components/Avatar";
 import Card from "../../shared/components/Card";
 

@@ -1,7 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
 
 *{
     margin: 0;
@@ -18,6 +17,10 @@ body {
   background: #4d4d4d;
 }
 
+main {
+  margin-top: 5rem;
+}
+
 .slide-in-left-enter {
   transform: translateX(-100%);
 }
@@ -25,7 +28,7 @@ body {
 .slide-in-left-enter-active {
   transform: translateX(0);
   opacity: 1;
-  transition: all 200ms;
+  transition: all 750ms;
 }
 
 .slide-in-left-exit {
@@ -36,7 +39,7 @@ body {
 .slide-in-left-exit-active {
   transform: translateX(-100%);
   opacity: 0;
-  transition: all 200ms;
+  transition: all 750ms;
 }
 
 .center {

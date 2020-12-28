@@ -5,6 +5,9 @@ import { Route, Redirect, Switch } from "react-router-dom";
 import Users from "./user/pages/Users";
 import NewPlace from "./places/pages/NewPlace";
 
+// Imports of Components
+import MainNavigation from "./shared/components/Navigation/MainNavigation";
+
 // Import of Global Styles
 import GlobalStyle from "./shared/GlobalStyle";
 
@@ -12,11 +15,14 @@ const App = () => {
   return (
     <div>
       <GlobalStyle />
-      <Switch>
-        <Route exact path="/" component={Users} />
-        <Route exact path="/places/new" component={NewPlace} />
-        <Redirect to="/" />
-      </Switch>
+      <MainNavigation />
+      <main>
+        <Switch>
+          <Route exact path="/" component={Users} />
+          <Route exact path="/places/new" component={NewPlace} />
+          <Redirect to="/" />
+        </Switch>
+      </main>
     </div>
   );
 };
