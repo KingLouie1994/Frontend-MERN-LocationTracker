@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import MainHeader from "./MainHeader";
 import NavLinks from "./NavLinks";
 import SideDrawer from "./SideDrawer";
-import Backdrop from "../Backdrop";
+import Backdrop from "../UIElements/Backdrop";
 
 // Imports for Styling
 import styled from "styled-components";
