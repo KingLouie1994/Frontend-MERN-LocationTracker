@@ -1,6 +1,6 @@
 // Imports of Components
 import User from "./User";
-import Card from "../../shared/components/Card";
+import Card from "../../shared/components/UIElements/Card";
 
 // Imports for Styling
 import styled from "styled-components";

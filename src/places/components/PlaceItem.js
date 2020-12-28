@@ -1,5 +1,6 @@
 // Imports of Components
-import Card from "../../shared/components/Card";
+import Card from "../../shared/components/UIElements/Card";
+import Button from "../../shared/components/FormElements/Button";
 
 // Imports for Styling
 import styled from "styled-components";
@@ -17,9 +18,9 @@ const PlaceItem = (props) => {
           <p>{props.description}</p>
         </PlaceItemInfo>
         <PlaceItemActions>
-          <button>VIEW ON MAP</button>
-          <button>EDIT</button>
-          <button>DELETE</button>
+          <Button inverse>VIEW ON MAP</Button>
+          <Button to={`/places/${props.id}`}>EDIT</Button>
+          <Button danger>DELETE</Button>
         </PlaceItemActions>
       </Card>
     </StyledPlaceItem>
@@ -61,7 +62,6 @@ const PlaceItemActions = styled.div`
   border-top: 1px solid #ccc;
   button,
   a {
-      padding: 0rem 0.2rem;
     margin: 0.5rem;
   }
 `;

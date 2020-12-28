@@ -2,8 +2,8 @@
 import { Link } from "react-router-dom";
 
 // Imports of Components
-import Avatar from "../../shared/components/Avatar";
-import Card from "../../shared/components/Card";
+import Avatar from "../../shared/components/UIElements/Avatar";
+import Card from "../../shared/components/UIElements/Card";
 
 // Imports for Styling
 import styled from "styled-components";

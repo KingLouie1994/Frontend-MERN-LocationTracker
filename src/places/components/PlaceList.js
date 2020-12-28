@@ -1,5 +1,5 @@
 // Imports of Components
-import Card from "../../shared/components/Card";
+import Card from "../../shared/components/UIElements/Card";
 import PlaceItem from "./PlaceItem";
 
 // Imports for Styling
