@@ -1,29 +1,55 @@
+// Imports from React
+import React, { useState } from "react";
+
 // Imports of Components
 import Card from "../../shared/components/UIElements/Card";
 import Button from "../../shared/components/FormElements/Button";
+import Modal from "../../shared/components/UIElements/Modal";
 
 // Imports for Styling
 import styled from "styled-components";
+import "./PlaceItem.css";
 
 const PlaceItem = (props) => {
+  const [showMap, setShowMap] = useState(false);
+
+  const openMapHandler = () => setShowMap(true);
+  const closeMapHandler = () => setShowMap(false);
+
   return (
-    <StyledPlaceItem>
-      <Card style={{ padding: 0 }}>
-        <PlaceItemImage>
-          <img src={props.image} alt={props.title} />
-        </PlaceItemImage>
-        <PlaceItemInfo>
-          <h2>{props.title}</h2>
-          <h3>{props.address}</h3>
-          <p>{props.description}</p>
-        </PlaceItemInfo>
-        <PlaceItemActions>
-          <Button inverse>VIEW ON MAP</Button>
-          <Button to={`/places/${props.id}`}>EDIT</Button>
-          <Button danger>DELETE</Button>
-        </PlaceItemActions>
-      </Card>
-    </StyledPlaceItem>
+    <React.Fragment>
+      <Modal
+        show={showMap}
+        onCancel={closeMapHandler}
+        header={props.address}
+        contentClass="place-item__modal-content"
+        footerClass="place-item__modal-actions"
+        footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
+      >
+        <div className="map-container">
+          <h2>The Map!!!</h2>
+        </div>
+      </Modal>
+      <StyledPlaceItem>
+        <Card style={{ padding: 0 }}>
+          <PlaceItemImage>
+            <img src={props.image} alt={props.title} />
+          </PlaceItemImage>
+          <PlaceItemInfo>
+            <h2>{props.title}</h2>
+            <h3>{props.address}</h3>
+            <p>{props.description}</p>
+          </PlaceItemInfo>
+          <PlaceItemActions>
+            <Button inverse onClick={openMapHandler}>
+              VIEW ON MAP
+            </Button>
+            <Button to={`/places/${props.id}`}>EDIT</Button>
+            <Button danger>DELETE</Button>
+          </PlaceItemActions>
+        </Card>
+      </StyledPlaceItem>
+    </React.Fragment>
   );
 };
 
@@ -65,13 +91,5 @@ const PlaceItemActions = styled.div`
     margin: 0.5rem;
   }
 `;
-
-//   .place-item__modal-content {
-//     padding: 0;
-//   }
-
-//   .place-item__modal-actions {
-//     text-align: right;
-//   }
 
 export default PlaceItem;
