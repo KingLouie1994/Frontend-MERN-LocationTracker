@@ -1,3 +1,6 @@
+// Imports from React
+import { useState } from "react";
+
 // Import self created Hooks
 import { useForm } from "../../shared/hooks/form-hook";
 
@@ -19,25 +22,44 @@ import {
 
 // Import Dummy Data
 import { DUMMY_PLACES } from "./UserPlaces";
+import { useEffect } from "react";
 
 const UpdatePlace = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const placeId = useParams().placeId;
 
   const identifiedPlace = DUMMY_PLACES.find((p) => p.id === placeId);
 
-  const [formState, inputHandler] = useForm(
+  const [formState, inputHandler, setFormData] = useForm(
     {
       title: {
-        value: identifiedPlace.title,
-        isValid: true,
+        value: "",
+        isValid: false,
       },
       description: {
-        value: identifiedPlace.description,
-        isValid: true,
+        value: "",
+        isValid: false,
       },
     },
-    true
+    false
   );
+
+  useEffect(() => {
+    setFormData(
+      {
+        title: {
+          value: identifiedPlace.title,
+          isValid: true,
+        },
+        description: {
+          value: identifiedPlace.description,
+          isValid: true,
+        },
+      },
+      true
+    );
+    setIsLoading(false);
+  }, [setFormData, identifiedPlace]);
 
   // Event Handler Functions
   const placeUpdateSubmitHandler = (e) => {
@@ -47,7 +69,7 @@ const UpdatePlace = () => {
 
   return (
     <div className="center">
-      {identifiedPlace ? (
+      {identifiedPlace && !isLoading ? (
         <StyledForm onSubmit={placeUpdateSubmitHandler}>
           <Input
             id="title"
