@@ -2,7 +2,7 @@
 import { useReducer, useEffect } from "react";
 
 // Import for Validation
-import { validate } from "../../shared/util/validators";
+import { validate } from "../../util/validators";
 
 // Imports for Styling
 import "./Input.css";
@@ -74,8 +74,6 @@ const Input = (props) => {
         value={inputState.value}
       />
     );
-
-  // Event Handler Functions
 
   return (
     <div

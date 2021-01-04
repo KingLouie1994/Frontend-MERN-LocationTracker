@@ -8,7 +8,7 @@ import { useForm } from "../../shared/hooks/form-hook";
 import { useParams } from "react-router-dom";
 
 // Import Components
-import Input from "../components/Input";
+import Input from "../../shared/components/UIElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import Card from "../../shared/components/UIElements/Card";
 
