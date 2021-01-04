@@ -1,6 +1,9 @@
 // Import of Components
 import Input from "../components/Input";
 
+// Import for Validation
+import { VALIDATOR_REQUIRE } from "../../shared/util/validators";
+
 // Imports for Styling
 import styled from "styled-components";
 
@@ -11,7 +14,7 @@ const NewPlace = () => {
         element="input"
         type="text"
         label="Title"
-        validators={[]}
+        validators={[VALIDATOR_REQUIRE()]}
         errorText="Please enter a valid Title"
       />
     </StyledForm>
