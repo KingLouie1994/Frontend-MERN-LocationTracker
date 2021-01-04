@@ -7,7 +7,13 @@ import styled from "styled-components";
 const NewPlace = () => {
   return (
     <StyledForm>
-      <Input element="input" type="text" label="Title" />
+      <Input
+        element="input"
+        type="text"
+        label="Title"
+        validators={[]}
+        errorText="Please enter a valid Title"
+      />
     </StyledForm>
   );
 };

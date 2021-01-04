@@ -1,13 +1,31 @@
 // Imports from React
-import { useRef } from "react";
+import { useReducer } from "react";
 
 // Imports for Styling
 import "./Input.css";
 
+const inputReducer = (state, action) => {
+  switch (action.type) {
+    case "CHANGE":
+      return {
+        ...state,
+        value: action.val,
+        isValid: true,
+      };
+    default:
+      return state;
+  }
+};
+
 const Input = (props) => {
+  const [inputState, dispatch] = useReducer(inputReducer, {
+    value: "",
+    isValid: false,
+  });
+
   // Event Handler Functions
   const changeHandler = (e) => {
-    e.preventDefault();
+    dispatch({ type: "CHANGE", val: e.target.value });
   };
 
   // Output depending on element prop
@@ -18,17 +36,28 @@ const Input = (props) => {
         type={props.type}
         placeholder={props.placeholder}
         onChange={changeHandler}
+        value={inputState.value}
       />
     ) : (
-      <textarea id={props.id} rows={props.row || 3} onChange={changeHandler} />
+      <textarea
+        id={props.id}
+        rows={props.row || 3}
+        onChange={changeHandler}
+        value={inputState.value}
+      />
     );
 
   // Event Handler Functions
 
   return (
-    <div className={`form-control`}>
+    <div
+      className={`form-control ${
+        !inputState.isValid && "form-control--invalid"
+      }`}
+    >
       <label htmlFor={props.id}>{props.label}</label>
       {element}
+      {!inputState.isValid && <p>{props.errorText}</p>}
     </div>
   );
 };
