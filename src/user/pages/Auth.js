@@ -1,5 +1,5 @@
 // Imports from React
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 // Import self created Hooks
 import { useForm } from "../../shared/hooks/form-hook";
@@ -16,10 +16,15 @@ import {
   VALIDATOR_REQUIRE,
 } from "../../shared/util/validators";
 
+// Import of Contexts
+import { AuthContext } from "../../shared/context/auth-context";
+
 // Imports for Styling
 import "./Auth.css";
 
 const Auth = () => {
+  const auth = useContext(AuthContext);
+
   const [isLoginMode, setIsLoginMode] = useState(true);
 
   const [formState, inputHandler, setFormData] = useForm(
@@ -40,6 +45,7 @@ const Auth = () => {
   const authSubmitHandler = (e) => {
     e.preventDefault();
     console.log(formState); // Later this gets sent to the backend
+    auth.login();
   };
 
   const switchModeHandler = () => {
