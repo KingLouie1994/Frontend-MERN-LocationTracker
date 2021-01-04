@@ -6,7 +6,7 @@ import Users from "./user/pages/Users";
 import NewPlace from "./places/pages/NewPlace";
 import UserPlaces from "./places/pages/UserPlaces";
 
-// Imports of Components
+// Import of Components
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 
 // Import of Global Styles
