@@ -1,5 +1,5 @@
-// Imports from React
-import { useCallback, useReducer } from "react";
+// Import self created Hooks
+import { useForm } from "../../shared/hooks/form-hook";
 
 // Import of Components
 import Input from "../components/Input";
@@ -14,59 +14,23 @@ import {
 // Imports for Styling
 import styled from "styled-components";
 
-const formReducer = (state, action) => {
-  switch (action.type) {
-    case "INPUT_CHANGE":
-      let formIsValid = true;
-      for (const inputId in state.inputs) {
-        if (inputId === action.inputId) {
-          formIsValid = formIsValid && action.isValid;
-        } else {
-          formIsValid = formIsValid && state.inputs[inputId].isValid;
-        }
-      }
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.inputId]: { value: action.value, isValid: action.isValid },
-        },
-        isValid: formIsValid,
-      };
-    default:
-      return state;
-  }
-};
-
 const NewPlace = () => {
-  const [formState, dispatch] = useReducer(formReducer, {
-    inputs: {
-      title: {
-        value: "",
-        isValid: false,
-      },
-      description: {
-        value: "",
-        isValid: false,
-      },
-      adress: {
-        value= "",
-        isValid: false
-      }
+  const [formState, inputHandler] = useForm({
+    title: {
+      value: "",
+      isValid: false,
     },
-    isValid: false,
-  });
+    description: {
+      value: "",
+      isValid: false,
+    },
+    adress: {
+      value: "",
+      isValid: false
+    }
+  }, false)
 
   // Event Handler Functions
-  const inputHandler = useCallback((id, value, isValid) => {
-    dispatch({
-      type: "INPUT_CHANGE",
-      value: value,
-      isValid: isValid,
-      inputId: id,
-    });
-  }, []);
-
   const placeSubmitHandler = (e) => {
     e.preventDefault();
     console.log(formState.inputs); // Later this gets sent to the backend

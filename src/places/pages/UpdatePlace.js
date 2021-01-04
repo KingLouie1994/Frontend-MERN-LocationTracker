@@ -1,3 +1,6 @@
+// Import self created Hooks
+import { useForm } from "../../shared/hooks/form-hook";
+
 // Imports from React Router Dom
 import { useParams } from "react-router-dom";
 
@@ -22,20 +25,40 @@ const UpdatePlace = () => {
 
   const identifiedPlace = DUMMY_PLACES.find((p) => p.id === placeId);
 
+  const [formState, inputHandler] = useForm(
+    {
+      title: {
+        value: identifiedPlace.title,
+        isValid: true,
+      },
+      description: {
+        value: identifiedPlace.description,
+        isValid: true,
+      },
+    },
+    true
+  );
+
+  // Event Handler Functions
+  const placeUpdateSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log(formState.inputs); // Later this gets sent to the backend
+  };
+
   return (
     <div className="center">
       {identifiedPlace ? (
-        <StyledForm>
+        <StyledForm onSubmit={placeUpdateSubmitHandler}>
           <Input
             id="title"
             element="input"
             type="text"
             label="Title"
-            validators={[VALIDATOR_REQUIRE]}
+            validators={[VALIDATOR_REQUIRE()]}
             errorText="Please enter a valid title."
-            onInput={() => {}}
-            value={identifiedPlace.title}
-            valid={true}
+            onInput={inputHandler}
+            initialValue={formState.inputs.title.value}
+            initialValid={formState.inputs.title.isValid}
           />
           <Input
             id="description"
@@ -43,11 +66,11 @@ const UpdatePlace = () => {
             label="Description"
             validators={[VALIDATOR_MINLENGTH(5)]}
             errorText="Please enter a description (at least 5 characters)."
-            onInput={() => {}}
-            value={identifiedPlace.description}
-            valid={true}
+            onInput={inputHandler}
+            initialValue={formState.inputs.description.value}
+            initialValid={formState.inputs.description.isValid}
           />
-          <Button type="submit" disabled={true}>
+          <Button type="submit" disabled={!formState.isValid}>
             UPDATE PLACE
           </Button>
         </StyledForm>
