@@ -1,5 +1,5 @@
 // Imports from React
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 // Imports of Components
 import Card from "../../shared/components/UIElements/Card";
@@ -7,11 +7,16 @@ import Button from "../../shared/components/FormElements/Button";
 import Modal from "../../shared/components/UIElements/Modal";
 import Map from "../../shared/components/UIElements/Map";
 
+// Import of Contexts
+import { AuthContext } from "../../shared/context/auth-context";
+
 // Imports for Styling
 import styled from "styled-components";
 import "./PlaceItem.css";
 
 const PlaceItem = (props) => {
+  const auth = useContext(AuthContext);
+
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
@@ -70,10 +75,14 @@ const PlaceItem = (props) => {
             <Button inverse onClick={openMapHandler}>
               VIEW ON MAP
             </Button>
-            <Button to={`/places/${props.id}`}>EDIT</Button>
-            <Button danger onClick={showDeleteWarningHandler}>
-              DELETE
-            </Button>
+            {auth.isLoggedIn && (
+              <>
+                <Button to={`/places/${props.id}`}>EDIT</Button>
+                <Button danger onClick={showDeleteWarningHandler}>
+                  DELETE
+                </Button>
+              </>
+            )}
           </PlaceItemActions>
         </Card>
       </StyledPlaceItem>
