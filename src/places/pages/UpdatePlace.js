@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 // Import Components
 import Input from "../components/Input";
 import Button from "../../shared/components/FormElements/Button";
+import Card from "../../shared/components/UIElements/Card";
 
 // Imports for Styling
 import styled from "styled-components";
@@ -45,19 +46,21 @@ const UpdatePlace = () => {
   );
 
   useEffect(() => {
-    setFormData(
-      {
-        title: {
-          value: identifiedPlace.title,
-          isValid: true,
+    if (identifiedPlace) {
+      setFormData(
+        {
+          title: {
+            value: identifiedPlace.title,
+            isValid: true,
+          },
+          description: {
+            value: identifiedPlace.description,
+            isValid: true,
+          },
         },
-        description: {
-          value: identifiedPlace.description,
-          isValid: true,
-        },
-      },
-      true
-    );
+        true
+      );
+    }
     setIsLoading(false);
   }, [setFormData, identifiedPlace]);
 
@@ -97,7 +100,9 @@ const UpdatePlace = () => {
           </Button>
         </StyledForm>
       ) : (
-        <h2>Could not find place!</h2>
+        <Card>
+          <h2>Could not find place!</h2>
+        </Card>
       )}
     </div>
   );

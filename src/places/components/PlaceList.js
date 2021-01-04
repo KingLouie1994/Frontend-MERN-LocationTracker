@@ -1,6 +1,7 @@
 // Imports of Components
 import Card from "../../shared/components/UIElements/Card";
 import PlaceItem from "./PlaceItem";
+import Button from "../../shared/components/FormElements/Button";
 
 // Imports for Styling
 import styled from "styled-components";
@@ -12,7 +13,7 @@ const PlaceList = (props) => {
         <StyledPlaceList className="center">
           <Card>
             <h2>No places found. Maybe create one?</h2>
-            <button>Share Place</button>
+            <Button to="/places/new">Share Place</Button>
           </Card>
         </StyledPlaceList>
       ) : (
