@@ -5,6 +5,9 @@ import { useParams } from "react-router-dom";
 import Input from "../components/Input";
 import Button from "../../shared/components/FormElements/Button";
 
+// Imports for Styling
+import styled from "styled-components";
+
 // Import for Validation
 import {
   VALIDATOR_MINLENGTH,
@@ -22,7 +25,7 @@ const UpdatePlace = () => {
   return (
     <div className="center">
       {identifiedPlace ? (
-        <form>
+        <StyledForm>
           <Input
             id="title"
             element="input"
@@ -47,12 +50,25 @@ const UpdatePlace = () => {
           <Button type="submit" disabled={true}>
             UPDATE PLACE
           </Button>
-        </form>
+        </StyledForm>
       ) : (
         <h2>Could not find place!</h2>
       )}
     </div>
   );
 };
+
+// Styled Components
+const StyledForm = styled.form`
+  position: relative;
+  list-style: none;
+  margin: 0 auto;
+  padding: 1rem;
+  width: 90%;
+  max-width: 40rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  border-radius: 6px;
+  background: white;
+`;
 
 export default UpdatePlace;
