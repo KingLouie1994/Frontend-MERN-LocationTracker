@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 // Imports of Components
 import PlaceList from "../components/PlaceList";
 
-const DUMMY_PLACES = [
+export const DUMMY_PLACES = [
   {
     id: "p1",
     title: "Empire State Building",
