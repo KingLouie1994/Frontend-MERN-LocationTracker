@@ -53,6 +53,7 @@ const NewPlace = () => {
     isValid: false,
   });
 
+  // Event Handler Functions
   const inputHandler = useCallback((id, value, isValid) => {
     dispatch({
       type: "INPUT_CHANGE",
@@ -62,8 +63,13 @@ const NewPlace = () => {
     });
   }, []);
 
+  const placeSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log(formState.inputs); // Later this gets sent to the backend
+  };
+
   return (
-    <StyledForm>
+    <StyledForm onSubmit={placeSubmitHandler}>
       <Input
         id="title"
         element="input"
@@ -79,6 +85,14 @@ const NewPlace = () => {
         label="Description"
         validators={[VALIDATOR_MINLENGTH(5)]}
         errorText="Please enter a description (at least 5 characters)."
+        onInput={inputHandler}
+      />
+      <Input
+        id="adress"
+        element="input"
+        label="Adress"
+        validators={[VALIDATOR_REQUIRE()]} // The check if the address exists will take place on the backend
+        errorText="Please enter a adress."
         onInput={inputHandler}
       />
       <Button type="submit" disabled={!formState.isValid}>
