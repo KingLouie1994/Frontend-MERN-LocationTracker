@@ -1,5 +1,5 @@
 // Imports from React
-import { useReducer } from "react";
+import { useReducer, useEffect } from "react";
 
 // Import for Validation
 import { validate } from "../../shared/util/validators";
@@ -16,10 +16,10 @@ const inputReducer = (state, action) => {
         isValid: validate(action.val, action.validators),
       };
     case "TOUCH":
-        return {
-            ...state,
-            isTouched: true
-        }
+      return {
+        ...state,
+        isTouched: true,
+      };
     default:
       return state;
   }
@@ -29,8 +29,15 @@ const Input = (props) => {
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: "",
     isValid: false,
-    isTouched: false
+    isTouched: false,
   });
+
+  const { id, onInput } = props;
+  const { value, isValid } = inputState;
+
+  useEffect(() => {
+    onInput(id, value, isValid);
+  }, [id, value, isValid, onInput]);
 
   // Event Handler Functions
   const changeHandler = (e) => {
