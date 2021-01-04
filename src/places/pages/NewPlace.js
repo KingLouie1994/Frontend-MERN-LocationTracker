@@ -2,7 +2,7 @@
 import { useForm } from "../../shared/hooks/form-hook";
 
 // Import of Components
-import Input from "../components/Input";
+import Input from "../../shared/components/UIElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 
 // Import for Validation
