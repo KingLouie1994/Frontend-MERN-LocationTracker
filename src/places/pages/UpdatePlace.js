@@ -1,19 +1,19 @@
 // Imports from React
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 // Import self created Hooks
 import { useForm } from "../../shared/hooks/form-hook";
+import { useHttpClient } from "../../shared/hooks/http-hook";
 
 // Imports from React Router Dom
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 // Import Components
 import Input from "../../shared/components/UIElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import Card from "../../shared/components/UIElements/Card";
-
-// Imports for Styling
-import styled from "styled-components";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 
 // Import for Validation
 import {
@@ -21,40 +21,18 @@ import {
   VALIDATOR_REQUIRE,
 } from "../../shared/util/validators";
 
-const DUMMY_PLACES = [
-  {
-    id: "p1",
-    title: "Empire State Building",
-    description: "One of the most famous sky scrapers in the world!",
-    imageUrl:
-      "https://pbs.twimg.com/profile_images/1272532349151072262/kBEZiWIQ.jpg",
-    address: "20 W 34th St, New York, NY 10001",
-    location: {
-      lat: 40.7484445,
-      lng: -73.9878531,
-    },
-    creator: "u1",
-  },
-  {
-    id: "p2",
-    title: "Emp. State Building",
-    description: "One of the most famous sky scrapers in the world!",
-    imageUrl:
-      "https://pbs.twimg.com/profile_images/1272532349151072262/kBEZiWIQ.jpg",
-    address: "20 W 34th St, New York, NY 10001",
-    location: {
-      lat: 40.7484445,
-      lng: -73.9878531,
-    },
-    creator: "u2",
-  },
-];
+// Import of Contexts
+import { AuthContext } from "../../shared/context/auth-context";
+
+// Imports for Styling
+import "./PlaceForm.css";
 
 const UpdatePlace = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const auth = useContext(AuthContext);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [loadedPlace, setLoadedPlace] = useState();
   const placeId = useParams().placeId;
-
-  const identifiedPlace = DUMMY_PLACES.find((p) => p.id === placeId);
+  const history = useHistory();
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -71,34 +49,71 @@ const UpdatePlace = () => {
   );
 
   useEffect(() => {
-    if (identifiedPlace) {
-      setFormData(
-        {
-          title: {
-            value: identifiedPlace.title,
-            isValid: true,
+    const fetchPlace = async () => {
+      try {
+        const responseData = await sendRequest(
+          `http://localhost:8000/api/places/${placeId}`
+        );
+        setLoadedPlace(responseData.place);
+        setFormData(
+          {
+            title: {
+              value: responseData.place.title,
+              isValid: true,
+            },
+            description: {
+              value: responseData.place.description,
+              isValid: true,
+            },
           },
-          description: {
-            value: identifiedPlace.description,
-            isValid: true,
-          },
-        },
-        true
-      );
-    }
-    setIsLoading(false);
-  }, [setFormData, identifiedPlace]);
+          true
+        );
+      } catch (err) {}
+    };
+    fetchPlace();
+  }, [sendRequest, placeId, setFormData]);
 
-  // Event Handler Functions
-  const placeUpdateSubmitHandler = (e) => {
-    e.preventDefault();
-    console.log(formState.inputs); // Later this gets sent to the backend
+  const placeUpdateSubmitHandler = async (event) => {
+    event.preventDefault();
+    try {
+      await sendRequest(
+        `http://localhost:8000/api/places/${placeId}`,
+        "PATCH",
+        JSON.stringify({
+          title: formState.inputs.title.value,
+          description: formState.inputs.description.value,
+        }),
+        {
+          "Content-Type": "application/json",
+        }
+      );
+      history.push("/" + auth.userId + "/places");
+    } catch (err) {}
   };
 
+  if (isLoading) {
+    return (
+      <div className="center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+
+  if (!loadedPlace && !error) {
+    return (
+      <div className="center">
+        <Card>
+          <h2>Could not find place!</h2>
+        </Card>
+      </div>
+    );
+  }
+
   return (
-    <div className="center">
-      {identifiedPlace && !isLoading ? (
-        <StyledForm onSubmit={placeUpdateSubmitHandler}>
+    <React.Fragment>
+      <ErrorModal error={error} onClear={clearError} />
+      {!isLoading && loadedPlace && (
+        <form className="place-form" onSubmit={placeUpdateSubmitHandler}>
           <Input
             id="title"
             element="input"
@@ -107,43 +122,26 @@ const UpdatePlace = () => {
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Please enter a valid title."
             onInput={inputHandler}
-            initialValue={formState.inputs.title.value}
-            initialValid={formState.inputs.title.isValid}
+            initialValue={loadedPlace.title}
+            initialValid={true}
           />
           <Input
             id="description"
             element="textarea"
             label="Description"
             validators={[VALIDATOR_MINLENGTH(5)]}
-            errorText="Please enter a description (at least 5 characters)."
+            errorText="Please enter a valid description (min. 5 characters)."
             onInput={inputHandler}
-            initialValue={formState.inputs.description.value}
-            initialValid={formState.inputs.description.isValid}
+            initialValue={loadedPlace.description}
+            initialValid={true}
           />
           <Button type="submit" disabled={!formState.isValid}>
             UPDATE PLACE
           </Button>
-        </StyledForm>
-      ) : (
-        <Card>
-          <h2>Could not find place!</h2>
-        </Card>
+        </form>
       )}
-    </div>
+    </React.Fragment>
   );
 };
-
-// Styled Components
-const StyledForm = styled.form`
-  position: relative;
-  list-style: none;
-  margin: 0 auto;
-  padding: 1rem;
-  width: 90%;
-  max-width: 40rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  border-radius: 6px;
-  background: white;
-`;
 
 export default UpdatePlace;
