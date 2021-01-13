@@ -9,7 +9,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { useParams, useHistory } from "react-router-dom";
 
 // Import Components
-import Input from "../../shared/components/UIElements/Input";
+import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
 import Card from "../../shared/components/UIElements/Card";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
