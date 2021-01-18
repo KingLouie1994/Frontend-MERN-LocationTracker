@@ -1,4 +1,3 @@
-// Imports from React
 import { useState, useCallback, useRef, useEffect } from "react";
 
 export const useHttpClient = () => {
@@ -10,7 +9,6 @@ export const useHttpClient = () => {
   const sendRequest = useCallback(
     async (url, method = "GET", body = null, headers = {}) => {
       setIsLoading(true);
-
       const httpAbortCtrl = new AbortController();
       activeHttpRequests.current.push(httpAbortCtrl);
 
@@ -33,14 +31,11 @@ export const useHttpClient = () => {
         }
 
         setIsLoading(false);
-
         return responseData;
       } catch (err) {
-
         setError(err.message);
         setIsLoading(false);
         throw err;
-        
       }
     },
     []
@@ -52,6 +47,7 @@ export const useHttpClient = () => {
 
   useEffect(() => {
     return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       activeHttpRequests.current.forEach((abortCtrl) => abortCtrl.abort());
     };
   }, []);
