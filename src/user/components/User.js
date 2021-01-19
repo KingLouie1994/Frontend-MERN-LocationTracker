@@ -14,7 +14,10 @@ const User = (props) => {
       <Card className="userContent">
         <Link to={`/${props.id}/places`}>
           <UserImage>
-            <Avatar image={`http://localhost:8000/${props.image}`} alt={props.name} />
+            <Avatar
+              image={process.env.REACT_APP_ASSET_URL + `${props.image}`}
+              alt={props.name}
+            />
           </UserImage>
           <UserInfo>
             <h2>{props.name}</h2>
