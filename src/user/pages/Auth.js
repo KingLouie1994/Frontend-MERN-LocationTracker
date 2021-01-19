@@ -113,8 +113,6 @@ const Auth = () => {
     }
   };
 
-  console.log(process.env.REACT_APP_GOOGLE_API_KEY)
-
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
