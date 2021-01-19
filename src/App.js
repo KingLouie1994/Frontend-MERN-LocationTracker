@@ -1,8 +1,11 @@
 // Imports from React
-import React, { useState, useCallback } from "react";
+import React from "react";
 
 // Imports from React Router Dom
 import { Route, Redirect, Switch } from "react-router-dom";
+
+// Import of Custom Hooks
+import { useAuth } from "./shared/hooks/auth-hook";
 
 // Import of Pages
 import Auth from "./user/pages/Auth";
@@ -21,37 +24,40 @@ import { AuthContext } from "./shared/context/auth-context";
 import GlobalStyle from "./shared/GlobalStyle";
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userId, setUserId] = useState(null);
-
-  const login = useCallback((uId) => {
-    setIsLoggedIn(true);
-    setUserId(uId);
-  }, []);
-
-  const logout = useCallback(() => {
-    setIsLoggedIn(false);
-    setUserId(null);
-  }, []);
+  const {login, logout, token, userId} = useAuth();
 
   let routes;
 
-  if (isLoggedIn) {
+  if (token) {
     routes = (
       <Switch>
-        <Route exact path="/" component={Users} />
-        <Route exact path="/:userId/places" component={UserPlaces} />
-        <Route exact path="/places/new" component={NewPlace} />
-        <Route exact path="/places/:placeId" component={UpdatePlace} />
+        <Route path="/" exact>
+          <Users />
+        </Route>
+        <Route path="/:userId/places" exact>
+          <UserPlaces />
+        </Route>
+        <Route path="/places/new" exact>
+          <NewPlace />
+        </Route>
+        <Route path="/places/:placeId">
+          <UpdatePlace />
+        </Route>
         <Redirect to="/" />
       </Switch>
     );
   } else {
     routes = (
       <Switch>
-        <Route exact path="/" component={Users} />
-        <Route exact path="/auth" component={Auth} />
-        <Route exact path="/:userId/places" component={UserPlaces} />
+        <Route path="/" exact>
+          <Users />
+        </Route>
+        <Route path="/:userId/places" exact>
+          <UserPlaces />
+        </Route>
+        <Route path="/auth">
+          <Auth />
+        </Route>
         <Redirect to="/auth" />
       </Switch>
     );
@@ -60,7 +66,8 @@ const App = () => {
   return (
     <AuthContext.Provider
       value={{
-        isLoggedIn: isLoggedIn,
+        isLoggedIn: !!token,
+        token: token,
         userId: userId,
         login: login,
         logout: logout,
